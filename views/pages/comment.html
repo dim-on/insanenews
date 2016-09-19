@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><?=Config::get('site_name')?></title>
+
+    <link rel="stylesheet" href="../../webroot/css/carousel.css">
+
+    <link rel="stylesheet" href="../../webroot/css/bootstrap.css">
+
+    <link rel="stylesheet" href="../../webroot/css/mainpage.css">
+
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script src="../../webroot/js/carousel.js"></script>
+
+    <!-- Скрипт, привязывающий событие click, открывающее модальное окно, к элементам, имеющим класс .btn -->
+    <script src="/../webroot/js/modal.js"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+</head>
+<body>
+
+
+
+<body>
+<?php
+$tags = '';
+foreach ($data['tags_list'] as $value) {
+$tags .= '"'.$value. '", ';
+}
+?>
+<!--Скрипт живого поиска-->
+<script>
+    $( function() {
+        var availableTags = [
+            <?php echo $tags; ?>
+        ];
+        $( "#tags" ).autocomplete({
+            source: availableTags
+        });
+    } );
+</script>
+
+<!--Модальное окно формы логина -->
+<div id="loginModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Заголовок модального окна -->
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Введите логин и пароль</h4>
+            </div>
+
+            <!-- Основное содержимое модального окна -->
+            <form method="post" action="/login/user_login/">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="email">Адрес электронной почты</label>
+                        <input type="email" id="email" name="email" class="form-control" placeholder="example@anymail.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Пароль</label>
+                        <input type="password" id="password" name="password" class="form-control">
+                    </div>
+                    <!-- Футер модального окна -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+                        <input type="submit" class="btn btn-success" value="Войти">
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<!--Модальное окно формы регистрации -->
+<div id="regModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Заголовок модального окна -->
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Введите регистрационные данные</h4>
+            </div>
+
+            <!-- Основное содержимое модального окна -->
+            <form method="post" action="/login/registration/">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="name">Имя</label>
+                        <input required type="text" id="name" name="name" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Адрес электронной почты</label>
+                        <input required type="email" id="reg_email" name="email" class="form-control" placeholder="example@anymail.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Пароль</label>
+                        <input required type="password" id="reg_password" name="password" class="form-control">
+                    </div>
+                    <!-- Футер модального окна -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+                        <input type="submit" class="btn btn-success">
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<!--Шапка сайта-->
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/default/"><?=Config::get('site_name')?></a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+            <ul class="nav navbar-nav">
+                <li><a href="/default/">Главная<span class="sr-only">(current)</span></a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-labelledby="dLabel">Категории<span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <!--todo подпункт Аналитика только при логине-->
+                        <?php
+                        $arr1= array_values($data ['category_alias']);
+                        $arr2 = array_values($data ['category_name']);
+                        $arr = array_combine($arr1, $arr2);
+                        foreach ($arr as $key=>$value ) {
+                        echo '<li><a href="/pages/category/' .$key. '/">' .$value. '</a></li>';
+                        }
+                        ?>
+                        <!--todo реализовать вложеный выпадающий список-->
+                    </ul>
+                </li>
+            </ul>
+
+            <form class="navbar-form navbar-left" role="search">
+                <div class="form-group">
+                    <input id="tags" type="text" class="form-control" placeholder="Введите тег">
+                </div>
+                <button type="submit" class="btn btn-default">Поиск</button>
+            </form>
+
+            <?php
+            if (isset ($_SESSION['name'])) {
+                echo '<ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-labelledby="dLabel">'.Session::get('name').'<span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="/login/user_logout/">Выход</a></li>
+                    <li><a href="#">Профиль</a></li>
+                    <!--todo реализовать вложеный выпадающий список-->
+                </ul>
+                </ul>';
+                } else {
+                echo '<ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-labelledby="dLabel">Авторизация<span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="#" id="login_button">Вход</a></li>
+                        <li><a href="#" id="reg_button">Регистрация</a></li>
+                        <!--todo реализовать вложеный выпадающий список-->
+                    </ul>
+            </ul>';
+                }
+                ?>
+
+        </div>
+    </div>
+</nav>
+
+<!--Контент-->
+
+<div class="container-fluid">
+
+    <!--Рекламный баннер №1-->
+    <div class="col-md-2">
+        <p>Реклама Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse auctor sodales mi, pretium dictum arcu ullamcorper in. Integer ultrices vestibulum leo, id dapibus mi maximus eu. Morbi rutrum nisi nec arcu lacinia commodo placerat vel nisl. Suspendisse a dui tincidunt, feugiat velit et, vestibulum justo. Vestibulum commodo facilisis nisi, in efficitur nunc mattis non. Nunc eget laoreet tellus. Nulla pharetra elementum lorem. Donec quis facilisis tortor, vel efficitur ante. Aliquam erat volutpat. Phasellus dapibus gravida arcu at dictum. Donec quis maximus nisi. Donec laoreet interdum semper. Nullam elementum, massa eget lobortis convallis, dui sapien elementum erat, non efficitur neque elit vel elit. Nulla tristique ipsum tellus, vitae ullamcorper magna dictum vel. Quisque facilisis sagittis erat ac sollicitudin. Fusce viverra malesuada velit vitae congue.</p>
+    </div>
+
+    <!--Комментарии-->
+    <div class="col-md-8">
+
+        <ul class="media-list">
+
+            <?php
+                foreach ($data ['user_comments'] as $value) {
+                   echo '<li class="media">
+                    <a class="pull-left" href="#">
+                        <img class="media-object img-circle" src="'. $value ['avatar']. '" alt="profile">
+                    </a>
+                    <div class="media-body">
+                        <div class="well well-lg">
+                            <h4 class="media-heading text-uppercase reviews"><a href="/pages/comment/' . $value ['user_id']. '">' . $value ['user_name']. '</a></h4>
+                            <h5>' . $value ['date']. '</h5>
+                            <p class="media-comment">'. $value ['message']. '</p>
+                            <ul class="nav nav-pills">
+                                <li class="active"><a href="#">Рейтинг <span class="badge">'. $value ['count']. '</span></a></li>
+                                <li><a href="#">Нравится <span class="badge"></span></a></li>
+                                <li><a href="#">Не нравится <span class="badge"></span></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    </li>';
+            }
+
+            ?>
+
+        </ul>
+
+    </div>
+
+    <!--Рекламный баннер №2-->
+    <div class="col-md-2">
+        <p>Реклама Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse auctor sodales mi, pretium dictum arcu ullamcorper in. Integer ultrices vestibulum leo, id dapibus mi maximus eu. Morbi rutrum nisi nec arcu lacinia commodo placerat vel nisl. Suspendisse a dui tincidunt, feugiat velit et, vestibulum justo. Vestibulum commodo facilisis nisi, in efficitur nunc mattis non. Nunc eget laoreet tellus. Nulla pharetra elementum lorem. Donec quis facilisis tortor, vel efficitur ante. Aliquam erat volutpat. Phasellus dapibus gravida arcu at dictum. Donec quis maximus nisi. Donec laoreet interdum semper. Nullam elementum, massa eget lobortis convallis, dui sapien elementum erat, non efficitur neque elit vel elit. Nulla tristique ipsum tellus, vitae ullamcorper magna dictum vel. Quisque facilisis sagittis erat ac sollicitudin. Fusce viverra malesuada velit vitae congue.</p>
+    </div>
+
+</div>
+
+
+</body>
+</html>

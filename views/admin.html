@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><?=Config::get('site_name')?></title>
+
+    <link rel="stylesheet" href="/../../webroot/css/carousel.css">
+
+    <link rel="stylesheet" href="../../webroot/css/bootstrap.css">
+
+    <link rel="stylesheet" href="/../../webroot/css/mainpage.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+    <script src="../../webroot/js/carousel.js"></script>
+
+    <!-- Скрипт, привязывающий событие click, открывающее модальное окно, к элементам, имеющим класс .btn -->
+    <script src="/../webroot/js/modal.js"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+</head>
+<body>
+
+
+
+        <?= $data['content']?>
+
+</body>
+</html>

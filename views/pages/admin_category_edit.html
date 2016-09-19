@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><?=Config::get('site_name')?></title>
+
+    <link rel="stylesheet" href="/../../webroot/css/carousel.css">
+
+    <link rel="stylesheet" href="../../webroot/css/bootstrap.css">
+
+    <link rel="stylesheet" href="/../../webroot/css/mainpage.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+    <script src="../../webroot/js/carousel.js"></script>
+
+    <!-- Скрипт, привязывающий событие click, открывающее модальное окно, к элементам, имеющим класс .btn -->
+    <script src="/../webroot/js/modal.js"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+</head>
+<body>
+
+<!--Шапка сайта-->
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/pages/admin_index/"><?=Config::get('site_name')?> - Admin Section</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+
+
+            <?php
+            if ( $_SESSION['role'] == 'admin') {
+                echo '<ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-labelledby="dLabel">'.Session::get('name').'<span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="/login/admin_logout/">Выход</a></li>
+                    <li><a href="#">Профиль</a></li>
+                </ul>
+                </ul>';
+                } else {
+                echo '<ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-labelledby="dLabel">Авторизация<span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="#" id="login_button">Вход</a></li>
+                        <li><a href="#" id="reg_button">Регистрация</a></li>
+                    </ul>
+            </ul>';
+                }
+                ?>
+
+        </div>
+    </div>
+</nav>
+
+<h3>Редактирование категории</h3>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-4">
+
+            <form method="post" action="">
+                <input type="hidden" name="category_id" value="<?= $data['categories'] ['category_id']?>">
+                <div class="form-group">
+                    <label for="category_alias">Алиас</label>
+                    <input type="text" id="category_alias" name="category_alias" value="<?= $data['categories'] ['category_alias']?>" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="category_name">Наименование категории</label>
+                    <input type="text" id="category_name" name="category_name" value="<?= $data['categories'] ['category_name']?>" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="is_published">Опубликовать?</label>
+                    <input type="checkbox" name="is_published" id="is_published" <?php if ($data['categories']['is_published']) { ?>checked="checked" <?php } ?>>
+                </div>
+                <input type="submit" class="btn btn-success">
+            </form>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

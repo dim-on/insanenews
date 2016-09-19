@@ -1,0 +1,26 @@
+.carousel-header {
+    margin-bottom: unset!important;
+}
+
+.nav-tabs {
+    margin-bottom: 15px;
+}
+
+.list-group-item.show-news {
+    height: 210px;
+}
+
+.list-group-item img {
+    width: 120px;
+    height: 120px;
+    float: left;
+    margin-top: 15px;
+    margin-right: 15px;
+}
+/*todo доделать ограничение по количеству символов*/
+.list-group-item-text {
+    /*white-space: nowrap; !* Запрещаем перенос строк *!*/
+    overflow: hidden; /* Обрезаем все, что не помещается в область */
+    padding: 5px; /* Поля вокруг текста */
+    text-overflow: ellipsis; /* Добавляем многоточие */
+}

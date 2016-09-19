@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><?=Config::get('site_name')?></title>
+
+    <link rel="stylesheet" href="/../../webroot/css/carousel.css">
+
+    <link rel="stylesheet" href="../../webroot/css/bootstrap.css">
+
+    <link rel="stylesheet" href="/../../webroot/css/mainpage.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+    <script src="../../webroot/js/carousel.js"></script>
+
+    <!-- Скрипт, привязывающий событие click, открывающее модальное окно, к элементам, имеющим класс .btn -->
+    <script src="/../webroot/js/modal.js"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+</head>
+<body>
+
+<!--Шапка сайта-->
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-2">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/pages/admin_index/"><?=Config::get('site_name')?> - Admin Section</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+
+
+            <?php
+            if ( $_SESSION['role'] == 'admin') {
+                echo '<ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-labelledby="dLabel">'.Session::get('name').'<span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="/login/admin_logout/">Выход</a></li>
+                    <li><a href="#">Профиль</a></li>
+                </ul>
+                </ul>';
+                } else {
+                echo '<ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-labelledby="dLabel">Авторизация<span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="#" id="login_button">Вход</a></li>
+                        <li><a href="#" id="reg_button">Регистрация</a></li>
+                    </ul>
+            </ul>';
+                }
+                ?>
+
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-10">
+
+            <h3>Добавление новой новости</h3>
+            <form method="post" action="">
+                <div class="form-group">
+                    <label for="news_title">Заголовок новости</label>
+                    <input type="text" id="news_title" name="news_title" value="" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="picture">Картинка</label>
+                    <input type="text" id="picture" name="picture" value="" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="news_text">Текст новости</label>
+                    <textarea name="news_text" id="news_text" class="form-control"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label" for="parent_category">Выберите категорию:</label>
+                    <select class="form-control" id="parent_category" name="parent_category" required>
+
+                        <?php
+                            for ($i=0; $i<count($data ['categories']['category_name']); $i++) {
+                               echo '<option value="'.$data ['categories']['category_id'][$i].'">'.$data ['categories']['category_name'][$i].'</option>';
+                        }
+                        ?>
+
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="is_published">Опубликовать?</label>
+                    <input type="checkbox" name="is_published" id="is_published" checked="checked">
+                </div>
+                <div class="form-group">
+                    <label for="is_analytics">Отображать в аналитике?</label>
+                    <input type="checkbox" name="is_analytics" id="is_analytics" checked="checked">
+                </div>
+                <input type="submit" class="btn btn-success">
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
